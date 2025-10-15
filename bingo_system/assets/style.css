@@ -1,0 +1,763 @@
+/* Estilos Base (Sin cambios) */
+:root {
+    --primary-color: #6a1b9a;
+    --secondary-color: #fdd835;
+    --text-color: #333;
+    --bg-color: #f4f4f9;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.main-header {
+    background-color: var(--card-bg);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+}
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+.main-nav a:hover, .main-nav a.active {
+    color: var(--primary-color);
+}
+.main-content {
+    padding: 40px 0;
+}
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(45deg, var(--primary-color), #8e24aa);
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.game-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+.btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 15px;
+    transition: transform 0.2s ease;
+}
+.btn:hover {
+    transform: translateY(-2px);
+}
+.purchase-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.alert { padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+.alert-success { background-color: #d4edda; color: #155724; }
+.alert-error { background-color: #f8d7da; color: #721c24; }
+.main-footer { text-align: center; padding: 20px 0; margin-top: 40px; border-top: 1px solid #e0e0e0; }
+
+/* === NUEVO: CÓDIGO RESPONSIVE === */
+@media (max-width: 768px) {
+    /* Ajustes para el encabezado y navegación */
+    .main-header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .main-nav {
+        border-top: 1px solid #eee;
+        padding-top: 1rem;
+        width: 100%;
+        text-align: center;
+    }
+    .main-nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    /* Ajustes para el contenido principal */
+    .hero {
+        padding: 40px 15px;
+    }
+    .games-list {
+        grid-template-columns: 1fr; /* Apila las tarjetas */
+    }
+    .purchase-form {
+        padding: 20px;
+    }
+}
+
+/* ... (todo el CSS existente) ... */
+
+/* === NUEVOS ESTILOS PARA LA PÁGINA DE COMPRA === */
+.total-amount-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-method {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.payment-method input[type="radio"] {
+    display: none; /* Ocultamos el radio button original */
+}
+
+.payment-method-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+}
+
+/* Círculo personalizado para el radio button */
+.payment-method-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.payment-method input[type="radio"]:checked + .payment-method-label::before {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    box-shadow: inset 0 0 0 4px #fff;
+}
+
+.payment-details {
+    margin-top: 10px;
+    padding-left: 30px;
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
+    display: none; /* Oculto por defecto */
+}
+
+.payment-method input[type="radio"]:checked ~ .payment-details {
+    display: block; /* Se muestra cuando el radio button está seleccionado */
+}
+
+/* === ESTILOS ACTUALIZADOS Y NUEVOS PARA MÉTODOS DE PAGO === */
+.total-amount-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-method-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.payment-method-card input[type="radio"] {
+    display: none;
+}
+
+.payment-method-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: inline-block;
+    position: relative;
+}
+
+.payment-method-card input[type="radio"]:checked + .payment-method-header .radio-custom {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s ease;
+}
+
+.payment-method-card input[type="radio"]:checked + .payment-method-header .radio-custom::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.payment-details {
+    padding: 0 15px 15px 15px;
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    display: none;
+}
+
+.payment-method-card input[type="radio"]:checked ~ .payment-details {
+    display: block;
+}
+
+.payment-method-card input[type="radio"]:checked {
+    border-color: var(--primary-color);
+}
+
+.details-grid {
+    display: grid;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.detail-item span {
+    font-weight: 500;
+    color: #333;
+}
+
+.copy-btn {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #cbd5e0;
+}
+
+.copy-btn.copied {
+    background: #48bb78;
+    color: #fff;
+}
+
+/* style.css */
+
+/* --- 1. CONFIGURACIÓN GENERAL Y NUEVA PALETA DE COLORES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #0077B6;   /* Un azul corporativo y confiable */
+    --secondary-color: #FF8C00; /* Naranja vibrante para llamados a la acción */
+    --accent-color: #00B4D8;    /* Un azul más claro para acentos y fondos */
+    --text-color: #333333;
+    --text-light: #666666;
+    --bg-color: #f8f9fa;        /* Un fondo gris muy claro para no cansar la vista */
+    --card-bg: #ffffff;
+    --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-strong: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- 2. ENCABEZADO MODERNO --- */
+.main-header {
+    background-color: var(--card-bg);
+    padding: 1rem 0;
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.main-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* --- 3. SECCIÓN "HERO" IMPACTANTE --- */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: #fff;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    margin-bottom: 50px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* --- 4. LISTA DE JUEGOS Y TARJETAS REDISEÑADAS --- */
+.games-section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.games-section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--secondary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.game-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+    overflow: hidden; /* Para que el borde superior no se salga */
+    border-top: 5px solid var(--accent-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.game-card h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin: 0 0 15px 0;
+}
+
+.game-card .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.info-item i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-align: center;
+    margin: 20px 0;
+}
+
+.card-footer {
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-top: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+/* --- 5. BOTONES ATRACTIVOS Y ALERTAS MEJORADAS --- */
+.btn {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: #fff;
+    padding: 12px 35px;
+    border-radius: 50px; /* Botones más redondeados */
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 2px solid var(--secondary-color);
+    box-shadow: var(--shadow-soft);
+}
+
+.btn:hover {
+    background: #fff;
+    color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 140, 0, 0.2);
+}
+
+.alert { 
+    padding: 15px; 
+    margin: 20px auto; 
+    border-radius: var(--border-radius); 
+    max-width: 1160px;
+    border-left: 5px solid;
+}
+
+.alert-success { 
+    background-color: #e6fffa; 
+    color: #1b655e;
+    border-color: #38c1a5;
+}
+
+.alert-error { 
+    background-color: #fff5f5; 
+    color: #c53030;
+    border-color: #fc8181;
+}
+
+/* --- 6. PIE DE PÁGINA --- */
+.main-footer { 
+    text-align: center; 
+    padding: 30px 0; 
+    margin-top: 50px; 
+    border-top: 1px solid #e0e0e0; 
+    color: var(--text-light);
+}
+
+/* --- ESTILOS ADICIONALES PARA FORMULARIOS (Añadir al final de style.css) --- */
+
+.form-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-strong);
+    border-top: 5px solid var(--primary-color);
+}
+
+.form-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.form-container p {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+
+/* Mejora para campos de texto y selectores */
+.form-group input[type="email"],
+.form-group input[type="text"],
+.form-group select {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+/* Efecto al seleccionar un campo del formulario */
+.form-group input[type="email"]:focus,
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Estilo para el botón primario (azul) */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    width: 100%; /* El botón ocupará todo el ancho del formulario */
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.btn-primary:hover {
+    background: #fff;
+    color: var(--primary-color);
+    box-shadow: 0 6px 12px rgba(0, 119, 182, 0.2);
+}
+
+/* --- ESTILOS ADICIONALES PARA PÁGINA DE COMPRA Y ÉXITO --- */
+
+/* Dividir el formulario en pasos lógicos */
+.form-step {
+    margin-bottom: 35px;
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+}
+
+.form-step h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos para el total a pagar */
+.total-amount-display {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--accent-color);
+    margin: 25px 0;
+}
+.total-amount-display strong {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+/* Mejoras para los métodos de pago */
+.payment-method-card {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    overflow: hidden; /* Para que el contenido no se desborde */
+}
+.payment-method-card:has(input:checked) {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 119, 182, 0.15);
+}
+
+/* Botón de copiar mejorado */
+.copy-btn {
+    background: #e9ecef;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.copy-btn:hover { background: #ced4da; }
+.copy-btn.copied {
+    background: #28a745;
+    color: white;
+}
+
+
+/* Estilo personalizado para el input de subir archivo */
+.file-upload-group {
+    position: relative;
+    border: 2px dashed #ccc;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+.file-upload-group:hover {
+    border-color: var(--primary-color);
+}
+.file-upload-group input[type="file"] {
+    display: none; /* Ocultamos el input real */
+}
+.file-upload-label {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.file-upload-label i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+.file-name {
+    margin-top: 15px;
+    font-weight: 600;
+    color: #28a745;
+}
+
+/* --- Estilos para la página de ÉXITO --- */
+.success-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-strong);
+    text-align: center;
+    border-top: 5px solid #28a745;
+}
+.success-icon {
+    font-size: 4rem;
+    color: #28a745;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    background-color: #eafaf1;
+    margin: 0 auto 20px;
+}
+.success-container h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+}
+.success-container p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+.success-container .btn {
+    margin-top: 20px;
+}
