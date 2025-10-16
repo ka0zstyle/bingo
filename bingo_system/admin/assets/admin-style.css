@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Estilos del Panel de Administración - Versión Final y Robusta
+   ========================================================================== */
+
+/* --- 1. ESTILOS GENERALES Y FUENTES --- */
+body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; margin: 0; color: #2d3748; }
+
+/* --- 2. DISEÑO PRINCIPAL (LAYOUT) --- */
+.admin-layout { display: flex; min-height: 100vh; }
+.sidebar { width: 260px; background-color: #1a202c; color: #a0aec0; display: flex; flex-direction: column; flex-shrink: 0; }
+/* NUEVO: alineación de título y botón */
+.sidebar-header { padding: 1.5rem; text-align: left; border-bottom: 1px solid #2d3748; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sidebar-header h3 { margin: 0; color: #fff; font-weight: 700; font-size: 1.125rem; letter-spacing: .2px; }
+/* NUEVO: botón de menú móvil “hamburguesa” */
+.mobile-menu-toggle {
+    display: none; /* visible solo en móviles */
+    width: 44px; height: 44px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.08);
+    border-radius: 12px;
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, transform .06s ease;
+}
+.mobile-menu-toggle:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28); }
+.mobile-menu-toggle:active { transform: translateY(1px); }
+/* Las 3 líneas del ícono */
+.mobile-menu-toggle span {
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 2px; background: #fff; border-radius: 2px;
+    transition: transform .25s ease, opacity .2s ease, top .25s ease, background .2s ease;
+}
+.mobile-menu-toggle span:nth-child(1) { top: 13px; }
+.mobile-menu-toggle span:nth-child(2) { top: 21px; }
+.mobile-menu-toggle span:nth-child(3) { top: 29px; }
+/* Animación a “X” cuando está abierto */
+.mobile-menu-toggle.is-open span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.mobile-menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.is-open span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+.nav-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+.nav-list a { display: flex; align-items: center; padding: 1rem 1.5rem; color: #a0aec0; text-decoration: none; font-weight: 500; transition: background-color 0.2s ease, color 0.2s ease; }
+.nav-list a:hover { background-color: #2d3748; color: #fff; }
+.nav-list a.active { background-color: #4a5568; color: #fff; font-weight: 600; }
+.nav-list a .icon { margin-right: 1rem; font-size: 1.2rem; }
+.main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+/* NUEVO: header principal más limpio */
+.main-header { background: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 5; }
+.main-header h1 { margin: 0; font-size: 1.6rem; font-weight: 700; color: #111827; letter-spacing: .2px; }
+.content-wrapper { padding: 2rem; flex-grow: 1; }
+
+/* --- 3. COMPONENTES REUTILIZABLES --- */
+.admin-section { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 1.5rem; }
+.admin-section h2 { margin-top: 0; border-bottom: 2px solid #f0f2f5; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+.admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+th { font-weight: 600; background-color: #f7fafc; white-space: nowrap; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+input[type="text"], input[type="number"], input[type="datetime-local"], select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+.btn-save, .btn-approve, .btn-reject, .btn-view, button { border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: transform 0.2s ease; }
+.btn-save:hover, .btn-approve:hover, .btn-reject:hover { transform: translateY(-1px); }
+.btn-save { background-color: #3182ce; color: #fff; }
+.btn-approve { background-color: #38a169; color: #fff; }
+.btn-reject { background-color: #e53e3e; color: #fff; }
+.btn-view { background-color: #4a5568; color: #fff; padding: 5px 12px; text-decoration: none; display: inline-block; }
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-link { padding: 0.75rem 1.5rem; text-decoration: none; color: #4a5568; background-color: #edf2f7; border-radius: 8px; font-weight: 600; }
+.tab-link.active { background-color: #fff; color: #2d3748; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+/* --- 4. ESTILOS DE MODALES --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
+.modal-content { background: #fff; border-radius: 12px; width: 95%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: fadeInScaleUp 0.3s ease-out; }
+@keyframes fadeInScaleUp { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid #e2e8f0; }
+.modal-header h3 { margin: 0; font-size: 1.25rem; color: #333; }
+.close-modal { width: 32px; height: 32px; border: none; background-color: #f1f1f1; border-radius: 50%; font-size: 1.5rem; font-weight: 300; color: #555; cursor: pointer; display: flex; justify-content: center; align-items: center; line-height: 1; transition: background-color 0.2s, color 0.2s; }
+.close-modal:hover { background-color: #e0e0e0; color: #111; }
+.modal-body { padding: 1.5rem; overflow-y: auto; }
+.modal-footer { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-top: 1px solid #e2e8f0; background-color: #f8f9fa; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+.modal-nav-btn { padding: 0.5rem 1rem; border: 1px solid #ccc; background-color: #fff; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
+.modal-nav-btn:hover:not(:disabled) { background-color: #f1f1f1; }
+.modal-nav-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+.modal-counter { font-weight: 500; color: #555; }
+.receipt-modal-body { text-align: center; padding: 1rem; }
+#receipt-image { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 4px; }
+
+/* --- 5. DISEÑO RESPONSIVO (MEDIA QUERIES) --- */
+@media screen and (max-width: 992px) {
+    .admin-section { background: transparent; box-shadow: none; padding: 0; }
+    
+    .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1.5rem; }
+    .tab-link { text-align: center; padding: 0.6rem 0.5rem; font-size: 0.8rem; }
+
+    .responsive-table thead { display: none; }
+    .responsive-table, .responsive-table tbody, .responsive-table tr, .responsive-table td { display: block; width: 100%; }
+    
+    .responsive-table tr { margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+    
+    .responsive-table td { padding: 0.8rem 1rem; border-bottom: 1px solid #f0f2f5; }
+    .responsive-table td:last-child { border-bottom: none; }
+    
+    .responsive-table td::before { content: attr(data-label); display: block; font-weight: 600; color: #4a5568; font-size: 0.8rem; margin-bottom: 0.25rem; }
+    .responsive-table td > span { display: block; text-align: left; word-wrap: break-word; overflow-wrap: break-word; color: #1a202c; font-weight: 500; }
+    
+    /* RE-DISEÑO DE LA CELDA DE ACCIONES - AHORA CON UN MEJOR LAYOUT */
+    .actions-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: #f7fafc;
+        padding: 1rem;
+        align-items: stretch; /* Asegura que los hijos ocupen todo el ancho */
+    }
+    .actions-cell::before { display: none; }
+    
+    .actions-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .actions-row > button, .actions-row > a {
+        flex: 1 1 120px; /* Permite que los botones crezcan y se ajusten en la fila */
+        font-size: 0.85rem;
+        padding: 0.7rem 0.2rem;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    
+    .adjust-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+    }
+    .adjust-row .adjust-input {
+        flex: 1 1 60px; /* Un tamaño base para el campo de cantidad */
+        max-width: 80px;
+        padding: 0.6rem;
+        font-size: 1rem;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+    .adjust-row .btn-adjust {
+        flex: 1 1 auto; /* Permite que los botones de ajustar tomen el espacio restante */
+        font-size: 0.85rem;
+        padding: 0.6rem 0.2rem;
+        box-sizing: border-box;
+    }
+    .btn-adjust.add { background-color: #3182ce; color: white; }
+    .btn-adjust.remove { background-color: #c53030; color: white; }
+
+    /* Mejora de la celda en eventos.php */
+    .event-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    .event-actions button {
+        flex: 1 1 120px;
+        font-size: 0.85rem;
+        padding: 0.7rem 0.2rem;
+        box-sizing: border-box;
+    }
+}
+
+/* NUEVO: comportamiento móvil de sidebar y botón */
+@media (max-width: 768px) {
+    .admin-layout { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; flex-direction: column; }
+    .sidebar-header { padding: 1rem 1.25rem; }
+    .mobile-menu-toggle { display: inline-block; }
+    .sidebar-header h3 { font-size: 1.05rem; }
+    .nav-list { display: none; }
+    .nav-list.open {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border-top: 1px solid #2d3748;
+        animation: revealMenu .2s ease-out;
+    }
+    @keyframes revealMenu {
+        from { opacity: 0; transform: translateY(-4px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .content-wrapper { padding: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .admin-hero {
+    padding: clamp(10px, 2.5vh, 16px);
+    border-radius: 16px;
+    /* Evita alturas forzadas grandes */
+    min-height: auto;
+  }
+  .admin-hero h1 {
+    font-size: clamp(18px, 4.5vw, 22px);
+    margin-bottom: 8px;
+  }
+  .admin-hero .kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas */
+    gap: 8px;
+  }
+  .admin-hero .search {
+    margin-top: 8px;
+  }
+}
